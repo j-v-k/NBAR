@@ -1,13 +1,15 @@
 ---
 title: "NBA 3 Point Stats ~ W/L% Correlation"
-author: "J-V-K"
+
 output: html_document
 ---
-I was interested in how Three-Point attmepts correlated to W/L% by era, so I made a chart showing the rSquared value of three different Three-Point statistics over 5 year periods since the 1981-1982 Season. 
+
 ![](C:\Users\James\Documents\GitHub\NBAR\Image\RPlot01.png)
 
+* Proportion of variation in calculated by the Adjusted R-Squared Value of the included Three-Point Statistics ~ W/L%
 
-Below is the same information but season-by-season and in table form. It also includes the 1979-1980 and 1980-81 Season. 1979-80 is the first season to introduce Three-Pointers.
+
+* Below is the same information but season-by-season and in table form. It also includes the 1979-1980 and 1980-81 Season. 1979-80 is the first season to introduce Three-Pointers.
 
 ```{r, echo=FALSE}
 library(ggplot2)
