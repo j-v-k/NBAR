@@ -1,0 +1,43 @@
+---
+title: "NBA 3 Point Stats ~ W/L% Correlation"
+author: "J-V-K"
+output: html_document
+---
+I was interested in how Three-Point attmepts correlated to W/L% by era, so I made a chart showing the rSquared value of three different Three-Point statistics over 5 year periods since the 1981-1982 Season. 
+![](/path/to/image.png)
+
+
+Below is the same information but season-by-season and in table form. It also includes the 1979-1980 and 1980-81 Season. 
+
+```{r, echo=FALSE}
+library(ggplot2)
+NBAdata = read.csv("C:\\Users\\James\\Downloads\\NBAStats5.csv")
+Seasons <- sort(unique(NBAdata$Season))
+options(scipen = 999)
+rSquaredDF <- data.frame(Season=factor(),
+                         RSquared3PTS=numeric(), RSquared3PA.1=numeric(), RSquared3PP=numeric())
+for(i in Seasons){
+  
+  
+  Wins3PTS.lm<-lm(X3P.TS ~W.L.,data=subset(NBAdata,Season==i))
+  Wins3PA.1.lm<-lm(X3PA.1 ~W.L.,data=subset(NBAdata,Season==i))
+  Wins3PPlm<-lm(X3PP ~W.L.,data=subset(NBAdata,Season==i))
+  #aquires the RSquared Score
+  r2Score3PTS<-summary(Wins3PTS.lm)$adj.r.squared
+  r2Score3PA.1 <-summary(Wins3PA.1.lm)$adj.r.squared
+  r2Score3PP  <-summary(Wins3PPlm)$adj.r.squared
+  RRowDF<-data.frame(Season=c(i),RSquared.3PTS=c(r2Score3PTS),RSquared.3PA.1 = r2Score3PA.1, RSquared3PP = r2Score3PP  )
+  rSquaredDF <- rbind(RRowDF, rSquaredDF)
+  rSquaredDF <- rSquaredDF[dim(rSquaredDF)[1]:1,]
+}
+colnames(rSquaredDF)= c("Season", "3P/Total_Shots","3PA_Per_Game", "3P%" )
+```
+
+
+```{r, echo=FALSE}
+rSquaredDF <- rSquaredDF[order(rSquaredDF$Season ),]
+print(rSquaredDF, row.names = FALSE)
+
+```
+
+
